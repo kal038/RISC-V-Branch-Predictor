@@ -30,7 +30,7 @@ $ ./instr_extract.sh -e bpa-pyriscv/riscv_isa/programs/return -o output.txt
 NOTE: If your command prompt mentions that you do not have permission to run the instr_extract .sh script,
 then run the following command: 
 ```
-$ chmod +x instr_extract.sh.
+$ chmod +x instr_extract.sh
 ```
 
 1.2 Importing the output of instructions into the BranchPredictor class:
