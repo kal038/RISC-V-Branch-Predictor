@@ -8,7 +8,7 @@ First, go to the main folder of this project.
 $ cd <wherever you imported this repository>/branch-prediction-analyzer
 
 1.1 Extracting the instructions from a binary to an output file (for example - contents of output.txt:
-
+```
                    0: PC: xxxxxxxx, IR: xxxxxxxx
                    1: PC: 80000000, IR: 00000093, li ra,0x0
                    2: PC: 80000004, IR: 00000113, li sp,0x0
@@ -20,17 +20,24 @@ $ cd <wherever you imported this repository>/branch-prediction-analyzer
                    8: PC: 8000001c, IR: 00000413, li s0,0x0
 
                    ...
+```
 ):
 
+```
 $ ./instr_extract.sh -e bpa-pyriscv/riscv_isa/programs/return -o output.txt
+```
 
 NOTE: If your command prompt mentions that you do not have permission to run the instr_extract .sh script,
 then run the following command: 
+```
 $ chmod +x instr_extract.sh.
+```
 
 1.2 Importing the output of instructions into the BranchPredictor class:
 
+```
 $ python3 branch_predictor_runner.py output.txt 
+```
 
 I currently have the runner setup such that it prints out the list of dictionaries, where each
 dictionary is an instruction (aka "Instructions" in the output) and the list of dictionaries,
@@ -38,6 +45,7 @@ where each dictionary is a branch event, so to speak (aka "Grouped Branch Sequen
 
 Example output:
 
+```
 Instructions:
 [
 0: None,
@@ -55,3 +63,4 @@ Grouped Branch Sequences
 2: {'instr': {'pc': '80001284', 'ir': '02078863', 'str': 'beqz a5,0x800012b4'}, 'predicted_pc': '800012b4', 'actual_pc': '800012b4', 'is_taken': True},
 
 ...
+```
