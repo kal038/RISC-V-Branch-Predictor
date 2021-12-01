@@ -1,5 +1,5 @@
-from branch_predictor import BranchPredictor
+from branch_predictor_info import BranchPredictorInfo
 
 if __name__ == "__main__":
-	BranchPredictor.init()
-	print(BranchPredictor.get_str())
+	BranchPredictorInfo.init()
+	print(BranchPredictorInfo.get_str())

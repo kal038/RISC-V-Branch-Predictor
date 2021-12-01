@@ -3,16 +3,16 @@ Kartikeya Sharma and Khoi Lam
 CSCI 320: Computer Architecture
 Professor Alan Marchiori
 
-Final Project: Branch Predictor
+Final Project: Branch Predictor Info
 """
 
 import re
 import sys
 
-class BranchPredictor:
+class BranchPredictorInfo:
 	"""
 	This is a static class. There is only one "instance" of the class.
-	All attributes and methods should be accessed via BranchPredictor.<attribute/method name>.
+	All attributes and methods should be accessed via BranchPredictorInfo.<attribute/method name>.
 
 	This class encapsulates a branch predictor, which can take a file containing a list of RISC-V
 	instructions in the following format:
@@ -49,18 +49,18 @@ class BranchPredictor:
 		helper initialization methods
 		"""
 
-		BranchPredictor.instr_filepath = sys.argv[1] # filepath is passed in as an argument
-		BranchPredictor.instr_file = open(BranchPredictor.instr_filepath)
+		BranchPredictorInfo.instr_filepath = sys.argv[1] # filepath is passed in as an argument
+		BranchPredictorInfo.instr_file = open(BranchPredictorInfo.instr_filepath)
 		
 
-		BranchPredictor.instr_dict_list = []
-		BranchPredictor._import_instrs()
-		BranchPredictor.grouped_branch_seqs = []
-		BranchPredictor._group_branch_seqs()
+		BranchPredictorInfo.instr_dict_list = []
+		BranchPredictorInfo._import_instrs()
+		BranchPredictorInfo.grouped_branch_seqs = []
+		BranchPredictorInfo._group_branch_seqs()
 
 	def _import_instrs():
 		"""
-		Sets the BranchPredictor's list of instructions
+		Sets the BranchPredictorInfo's list of instructions
 		from the output file specified in the class fieldsd
 
 		For each line in the file containing the list of
@@ -85,7 +85,7 @@ class BranchPredictor:
 		Then, we just store it in the list of instructions, where each instruction
 		is encapsulated in a dictionary containing the pc, ir, and string.
 		"""
-		lines = BranchPredictor.instr_file.readlines()
+		lines = BranchPredictorInfo.instr_file.readlines()
 		for line in lines:
 			regex = '([a-fA-F0-9]{8})'
 			hex_vals = re.findall(regex, line)
@@ -115,13 +115,13 @@ class BranchPredictor:
 			# instruction number is preserved through the list index;
 			# we cannot assign a value to a particular list index without
 			# having initialized it
-			BranchPredictor._grow_instr_dict_list(instr_num) 
+			BranchPredictorInfo._grow_instr_dict_list(instr_num) 
 
-			BranchPredictor.instr_dict_list[instr_num] = instr_dict
+			BranchPredictorInfo.instr_dict_list[instr_num] = instr_dict
 
 	def _group_branch_seqs():
 		"""
-		Sets the BranchPredictor's list of branch sequences
+		Sets the BranchPredictorInfo's list of branch sequences
 	
 		If the instruction starts with a b, then we know that
 		it is a branch instruction per the RISC-V green sheet.
@@ -139,9 +139,9 @@ class BranchPredictor:
 		was taken, and store that as a boolean in the dictionary representing the
 		branch sequence or branch event, so to speak. 
 		"""
-		for i in range(len(BranchPredictor.instr_dict_list)):
-			if BranchPredictor.instr_dict_list[i] == None: continue
-			instr_str = BranchPredictor.instr_dict_list[i]["str"]
+		for i in range(len(BranchPredictorInfo.instr_dict_list)):
+			if BranchPredictorInfo.instr_dict_list[i] == None: continue
+			instr_str = BranchPredictorInfo.instr_dict_list[i]["str"]
 			if instr_str.split()[0][0] == "b":
 				regex = '([a-fA-F0-9]{8})'
 				hex_vals = re.findall(regex, instr_str)
@@ -151,15 +151,15 @@ class BranchPredictor:
 				if hex_vals == None: continue
 				if len(hex_vals) < 1: continue
 
-				taken_pc = BranchPredictor.instr_dict_list[i+1]["pc"]
+				taken_pc = BranchPredictorInfo.instr_dict_list[i+1]["pc"]
 				target_pc = hex_vals[-1]		   
 				is_taken = taken_pc == target_pc
-				branch_seq_dict = {"instr": BranchPredictor.instr_dict_list[i],
+				branch_seq_dict = {"instr": BranchPredictorInfo.instr_dict_list[i],
 								   "taken_pc": taken_pc,
 								   "target_pc": target_pc,
 								   "is_taken": is_taken
 								   }
-				BranchPredictor.grouped_branch_seqs.append(branch_seq_dict)
+				BranchPredictorInfo.grouped_branch_seqs.append(branch_seq_dict)
 
 	def _get_dict_list_str(dict_list: list):
 		"""
@@ -169,7 +169,7 @@ class BranchPredictor:
 		output = "[\n"
 		for i in range(len(dict_list)):
 			output += f"{i}: {dict_list[i]}"
-			if i != len(BranchPredictor.instr_dict_list)-1:
+			if i != len(BranchPredictorInfo.instr_dict_list)-1:
 				output += ",\n"
 		output += "\n]"
 		return output
@@ -180,12 +180,12 @@ class BranchPredictor:
 		a list of grouped branche sequences in dictionaries.
 		""" 
 		output = "Instructions:\n"
-		output += BranchPredictor._get_dict_list_str(
-			BranchPredictor.instr_dict_list
+		output += BranchPredictorInfo._get_dict_list_str(
+			BranchPredictorInfo.instr_dict_list
 		)
 		output += "\n\nGrouped Branch Sequences\n"
-		output += BranchPredictor._get_dict_list_str(
-			BranchPredictor.grouped_branch_seqs
+		output += BranchPredictorInfo._get_dict_list_str(
+			BranchPredictorInfo.grouped_branch_seqs
 		)
 		return output
    
@@ -196,8 +196,8 @@ class BranchPredictor:
 		None to the list until the inputted index is in the
 		index range of the instruction list.
 		"""
-		if len(BranchPredictor.instr_dict_list) < 1:
-			BranchPredictor.instr_dict_list.append(None)
-		curr_instr_dict_len = len(BranchPredictor.instr_dict_list)
+		if len(BranchPredictorInfo.instr_dict_list) < 1:
+			BranchPredictorInfo.instr_dict_list.append(None)
+		curr_instr_dict_len = len(BranchPredictorInfo.instr_dict_list)
 		for i in range(instr_num - curr_instr_dict_len + 2):
-			BranchPredictor.instr_dict_list.append(None)
+			BranchPredictorInfo.instr_dict_list.append(None)

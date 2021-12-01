@@ -33,7 +33,7 @@ then run the following command:
 $ chmod +x instr_extract.sh
 ```
 
-1.2 Importing the output of instructions into the BranchPredictor class:
+1.2 Importing the output of instructions into the BranchPredictorInfo class:
 
 ```
 $ python3 branch_predictor_runner.py output.txt 
