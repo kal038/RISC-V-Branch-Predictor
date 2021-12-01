@@ -58,9 +58,9 @@ Instructions:
 
 Grouped Branch Sequences
 [
-0: {'instr': {'pc': '8000008c', 'ir': '0002ca63', 'str': 'bltz t0,0x800000a0'}, 'predicted_pc': '800000a0', 'actual_pc': '800000a0', 'is_taken': True},
-1: {'instr': {'pc': '800000c4', 'ir': '00b57063', 'str': 'bgeu a0,a1,0x800000c4'}, 'predicted_pc': '800000c4', 'actual_pc': '800000c8', 'is_taken': False},
-2: {'instr': {'pc': '80001284', 'ir': '02078863', 'str': 'beqz a5,0x800012b4'}, 'predicted_pc': '800012b4', 'actual_pc': '800012b4', 'is_taken': True},
+0: {'instr': {'pc': '8000008c', 'ir': '0002ca63', 'str': 'bltz t0,0x800000a0'}, 'taken_pc': '800000a0', 'target_pc': '800000a0', 'is_taken': True},
+1: {'instr': {'pc': '800000c4', 'ir': '00b57063', 'str': 'bgeu a0,a1,0x800000c4'}, 'taken_pc': '800000c8', 'target_pc': '800000c4', 'is_taken': False},
+2: {'instr': {'pc': '80001284', 'ir': '02078863', 'str': 'beqz a5,0x800012b4'}, 'taken_pc': '800012b4', 'target_pc': '800012b4', 'is_taken': True},
 
 ...
 ```
