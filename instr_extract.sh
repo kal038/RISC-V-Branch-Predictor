@@ -27,4 +27,4 @@ then
    helpFunction
 fi
 
-python3 bpa-pyriscv/onestage_elf_instr_print.py $parameterE > $parameterO
+python3 bpa_pyriscv/onestage_elf_instr_print.py $parameterE > $parameterO
