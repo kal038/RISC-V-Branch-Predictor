@@ -7,11 +7,14 @@ from saturating_counter import SaturatingCounter
 class HistoryTable:
     
     def __init__(self, name = "BHT", width = 2):
-        self.name = name
-        self.height = 2 ** width
-        self.table = [None] * self.height
+        self.name = name # name, e.g. BHT, PHT
+        self.height = 2 ** width # height of the table
+				 #  is 2 ^ num selection bits
+        self.table = [None] * self.height # initialize array based on height
         for i in range(self.height):
-            self.table[i] = SaturatingCounter()
+            self.table[i] = SaturatingCounter() # for each index in array, 
+						# make a saturating counter object
+						# with value 10
 
     def increment(self, idx):
         self.table[idx].increment()

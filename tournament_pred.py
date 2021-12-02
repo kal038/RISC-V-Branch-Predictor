@@ -4,7 +4,7 @@ Have to call get_prediction before update_predictor or will crash
 from history_table import HistoryTable
 from saturating_counter import SaturatingCounter
 from global_branch_history import GlobalBranchHistory
-from mux import make_mux
+from bpa_pyriscv.mux import make_mux
 
 class TournamentPred:
     
@@ -23,7 +23,7 @@ class TournamentPred:
         self.meta = HistoryTable("Meta", width)
         self.BHT_prediction = None
         self.PHT_prediction = None
-        self.meta_predicton = None
+        self.meta_prediction = None
         self.global_branch_hist = GlobalBranchHistory(width)
         
     def get_prediction(self, pc):
@@ -33,9 +33,10 @@ class TournamentPred:
         '''
         self.BHT_prediction = self.BHT.get_prediction(pc)
         self.PHT_prediction = self.PHT.get_prediction(self.global_branch_hist.get_gbh())
-        self.meta_predicton = self.meta.get_prediction(self.global_branch_hist.get_gbh()) # 0/False means that meta chose BHT and 1/True means that meta chose PHT
+        self.meta_prediction = self.meta.get_prediction(self.global_branch_hist.get_gbh()) # 0/False means that meta chose BHT and 1/True means that meta chose PHT
+        
         mux = make_mux(lambda: self.BHT_prediction, lambda: self.PHT_prediction)
-        if self.meta_predicton == True:
+        if self.meta_prediction == True:
             mux_sel = 1
         else:
             mux_sel = 0
@@ -43,7 +44,7 @@ class TournamentPred:
         return mux(mux_sel)
 
 
-    def update_predictor(self, outcome, pc):
+    def update_predictor(self, outcome: bool, pc: int):
         '''
         Method to update the whole tournament predictor including the BHT, PHT, Meta, and Global Branch History
 

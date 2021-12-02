@@ -21,8 +21,8 @@ class SaturatingCounter:
         return: False if the MSB of the number is 0
         True signifies a prediction of Taken and False signifies a prediction of Not Taken
         '''
-        bin_temp = '{0:02b}'.format(self.counter)
-        if bin_temp[0] == "1":
+        bin_temp = '{0:02b}'.format(self.counter) # converts counter into binary string
+        if bin_temp[0] == "1": # MSB obtained by first character in binary string
             return True
         else:
             return False 

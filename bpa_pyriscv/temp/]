@@ -1,0 +1,57 @@
+from riscv_isa.isa import regNumToName
+
+class RegFile:
+
+	NUM_REGS = 32
+	REG_BIT_LEN = \
+		lambda reg_num: 1 if reg_num == 0 \
+		else reg_num * REG_BIT_LEN(reg_num-1)
+
+	NUM_REGS_PER_LINE = 4
+	NUM_STR_PADDING = 4
+
+	reg_vals = [0 for i in range(NUM_REGS)]
+	_rs1 = None
+	_rs2 = None
+
+	get_rs1 = lambda: RegFile._rs1 
+	get_rs2 = lambda: RegFile._rs2
+
+	def read(rs):
+		RegFile._rs1 = rs % NUM_REGS
+		RegFile._rs2 = (rs >> REG_BIT_LEN) % NUM_REGS 
+		
+		return
+
+	def clock(wa, wd, en):
+		if en is True and wa != 0:
+			RegFile.reg_vals[wa] = wd
+		
+		return
+
+	def display():
+		out_str = ""
+		reg_num = 0
+		while (reg_num < RegFile.NUM_REGS):
+			for i in range(RegFile.NUM_REGS_PER_LINE):
+				out_str += \
+				str(regNumToName(reg_num))\
+				.rjust(RegFile.NUM_STR_PADDING) +\
+				 ": " + f"{RegFile.reg_vals[reg_num]:08x}" + " "
+				reg_num += 1
+			out_str += "\n"
+		print(out_str)	
+		
+if __name__ == "__main__":
+	RegFile.display()
+	for wa in range(RegFile.NUM_REGS):
+		RegFile.clock(wa, 0x42+wa, True) 
+	RegFile.display()
+
+	for rs1 in range(RegFile.NUM_REGS):
+		for rs2 in range(RegFile.NUM_REGS):
+			rs = rs1 << RegFile.REG_BIT_LEN + rs2
+			print("rs is " + f"{rs:b}")
+			RegFile.read(rs)
+			print("rs1 is " + f"{RegFile.get_rs1():x}")
+			print("rs2 is " + f"{RegFile.get_rs2():x}")		 

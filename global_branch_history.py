@@ -1,8 +1,8 @@
 class GlobalBranchHistory:
     
     def __init__(self, width = 2):
-        self.width = width
-        self.history = [0] * self.width
+        self.width = width # number of selecting bits
+        self.history = [0] * self.width # e.g. [0, 1]
 
     def shift_in(self, bit_val):
         if self.width == 2:
@@ -12,11 +12,6 @@ class GlobalBranchHistory:
             temp_arr = self.history[:self.width-1]
             self.history[0] = bit_val
             self.history[1:] = temp_arr
-            
-
-    def set_gbh(self, value_as_string):
-        for i in range(len(value_as_string)):
-            self.history[i] = int(value_as_string[i])
 
     def get_gbh(self):
         out = ""
@@ -29,6 +24,10 @@ class GlobalBranchHistory:
         for char in self.history:
             out += str(char)
         return out
+
+    def set_gbh(self, value_as_string):
+        for i in range(len(value_as_string)):
+            self.history[i] = int(value_as_string[i])
 
 
 
