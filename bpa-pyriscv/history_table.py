@@ -6,10 +6,9 @@ from saturating_counter import SaturatingCounter
 
 class HistoryTable:
     
-    def __init__(self, name = "BHT"):
+    def __init__(self, name = "BHT", width = 2):
         self.name = name
-        temp = SaturatingCounter()
-        self.height = temp.get_width() ** 2
+        self.height = 2 ** width
         self.table = [None] * self.height
         for i in range(self.height):
             self.table[i] = SaturatingCounter()
