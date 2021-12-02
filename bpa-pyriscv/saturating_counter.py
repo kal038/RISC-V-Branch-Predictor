@@ -42,6 +42,10 @@ class SaturatingCounter:
             #print("Saturated")
             return
 
+    def get_width(self):
+        return self.width
+
+
     def __repr__(self) -> str:
         return '{0:02b}'.format(self.counter)
 
