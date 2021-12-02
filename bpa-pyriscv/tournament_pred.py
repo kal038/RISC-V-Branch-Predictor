@@ -102,7 +102,8 @@ if __name__ == "__main__":
     print(my_tournament)
     # Now write a test with an in-class example
     pc = 1
-    global_branch_history = 1
+    global_branch_history = my_tournament.global_branch_hist.get_gbh()
+    print(global_branch_history)
     #my_tournament.BHT.table[pc] = 2
     my_tournament.BHT.decrement(pc) # starting value is 3, decrement once to get 2
     #my_tournament.PHT.table[global_branch_history] = 1
@@ -120,3 +121,15 @@ if __name__ == "__main__":
     my_tournament.update_predictor(outcome, pc)
     print(my_tournament)
     print(my_tournament.global_branch_hist)
+    print("-------------------------------------------------------------")
+    global_branch_history = my_tournament.global_branch_hist.get_gbh()
+    print("gbh = " + str(global_branch_history))
+    pc = 1
+    print("pc = " + str(pc))
+    print(my_tournament)
+    prediction = my_tournament.get_prediction(pc)
+    print("BHT selects, should be False: " + str(my_tournament.BHT_prediction) )
+    print("PHT selects, should be True: " + str(my_tournament.PHT_prediction) )
+    print("Prediction from the tournament should be True, got: " + str(prediction))
+
+
