@@ -24,11 +24,12 @@ class TournamentPred:
         self.BHT_prediction = None
         self.PHT_prediction = None
         self.meta_predicton = None
-        self.global_branch_hist = GlobalBranchHistory()
+        self.global_branch_hist = GlobalBranchHistory(width)
         
     def get_prediction(self, pc):
         '''
         Return: True if the prediction is Taken and False if the prediction is Not Taken
+        Inputs: pc, make sure that it is an integer
         '''
         self.BHT_prediction = self.BHT.get_prediction(pc)
         self.PHT_prediction = self.PHT.get_prediction(self.global_branch_hist.get_gbh())
@@ -97,7 +98,7 @@ class TournamentPred:
 
 
 if __name__ == "__main__":
-    my_tournament = TournamentPred()
+    my_tournament = TournamentPred() # default is 2, but you can choose whatever value 
     my_tournament.global_branch_hist.set_gbh("01")
     print(my_tournament)
     # Now write a test with an in-class example
@@ -131,5 +132,9 @@ if __name__ == "__main__":
     print("BHT selects, should be False: " + str(my_tournament.BHT_prediction) )
     print("PHT selects, should be True: " + str(my_tournament.PHT_prediction) )
     print("Prediction from the tournament should be True, got: " + str(prediction))
+    print("-------------------------------------------------------------")
+    my_tournament = TournamentPred(3)
+    print(my_tournament)
+    print(my_tournament.global_branch_hist)
 
 

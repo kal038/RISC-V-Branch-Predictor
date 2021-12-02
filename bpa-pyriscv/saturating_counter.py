@@ -12,7 +12,7 @@ class SaturatingCounter:
 
         '''
         self.width = width
-        self.counter = 3
+        self.counter = 2
         
 
     def get_prediction(self):
