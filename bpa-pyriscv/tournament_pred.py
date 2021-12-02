@@ -136,5 +136,10 @@ if __name__ == "__main__":
     my_tournament = TournamentPred(3)
     print(my_tournament)
     print(my_tournament.global_branch_hist)
+    my_tournament.global_branch_hist.shift_in(1)
+    my_tournament.global_branch_hist.shift_in(1)
+    my_tournament.global_branch_hist.shift_in(0)
+    print(my_tournament.global_branch_hist)
+    print(my_tournament.global_branch_hist.get_gbh())
 
 
