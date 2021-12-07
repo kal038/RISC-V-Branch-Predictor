@@ -44,23 +44,26 @@ def simulate_tp(width: int):
 	print(round(pct_correct * 100, 2))
 
 def simulate_btb():
-	btb = BTB()
+	btb = BTB(TournamentPred(width = TABLE_WIDTH))
 	correct_preds = 0
 	for branch_event in BranchPredictorInfo.grouped_branch_seqs:
 		pc_lookup = int(branch_event["instr"]["pc"], 16)
-		pc_pred = btb.get_prediction(pc_lookup)
-		if branch_event["taken_pc"] == pc_pred:
+		pc_pred = btb.get_prediction(pc_lookup, branch_event["is_taken"])
+		if branch_event["actual_pc"] == pc_pred:
 			correct_preds += 1
 		else:
 			btb.update_predictor(
 				pc_lookup, 
-				pc_targ = branch_event["taken_pc"]
+				pc_targ = branch_event["actual_pc"]
 			)
 	pct_correct = \
 	correct_preds / len(BranchPredictorInfo.grouped_branch_seqs)
 	# print(f"TABLE_WIDTH: {width}; pct_correct: {pct_correct * 100}")	
 	print(round(pct_correct * 100, 2))
 
+"""
+Analyzes the user-specified RISCV instruction file
+"""
 if __name__ == "__main__":
 	BranchPredictorInfo.init()
 	# print(BranchPredictorInfo.get_str())

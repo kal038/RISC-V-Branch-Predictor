@@ -35,6 +35,9 @@ class HistoryTable:
     def __str__(self) -> str:
         return str(self.table)
 
+"""
+Unit Tests for HistoryTable
+"""
 if __name__ == "__main__":
     my_BHT = HistoryTable()
     print(my_BHT)

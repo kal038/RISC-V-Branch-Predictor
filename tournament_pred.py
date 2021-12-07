@@ -7,8 +7,6 @@ from global_branch_history import GlobalBranchHistory
 from bpa_pyriscv.mux import make_mux
 
 class TournamentPred:
-    
-
 
     def __init__(self, width = 2):
         '''
@@ -96,7 +94,9 @@ class TournamentPred:
 
 
 
-
+"""
+Unit Tests for TournamentPred
+"""
 
 if __name__ == "__main__":
     my_tournament = TournamentPred() # default is 2, but you can choose whatever value 

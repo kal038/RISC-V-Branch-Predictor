@@ -135,7 +135,7 @@ class BranchPredictorInfo:
 		where 0x800000c4 is the target pc. The pc that was actually taken
 		is the pc of the next instruction that was executed in the instruction
 		series present in the output file (in our example case, that is output.txt).
-		If the pc taken and the target pc are equal, then we know that the branch
+		If the actual pc and the target pc are equal, then we know that the branch
 		was taken, and store that as a boolean in the dictionary representing the
 		branch sequence or branch event, so to speak. 
 		"""
@@ -155,7 +155,7 @@ class BranchPredictorInfo:
 				target_pc = hex_vals[-1]		   
 				is_taken = taken_pc == target_pc
 				branch_seq_dict = {"instr": BranchPredictorInfo.instr_dict_list[i],
-								   "taken_pc": taken_pc,
+								   "actual_pc": taken_pc,
 								   "target_pc": target_pc,
 								   "is_taken": is_taken
 								   }

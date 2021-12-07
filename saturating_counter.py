@@ -52,6 +52,9 @@ class SaturatingCounter:
     def __str__(self) -> str:
         return '{0:02b}'.format(self.counter)
 
+"""
+Unit Tests for SaturatingCounter"
+"""
 if __name__ == "__main__":
     my_counter = SaturatingCounter()
     print("Prediction should be False, got:" + str(my_counter.get_prediction()))

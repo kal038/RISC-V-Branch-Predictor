@@ -5,11 +5,12 @@ from bpa_pyriscv.mux import make_mux
 
 class BTB:
 
-	def __init__(self):
+	def __init__(self, predictor):
 		self.lookup_table = {}
  
-	def get_prediction(self, pc: int):
-		if pc not in self.lookup_table.keys(): return None
+	def get_prediction(self, pc: int, is_taken: bool):
+		if not is_taken: return None
+		if pc not in self.lookup_table: return None
 		else: return self.lookup_table[pc] 
 
 	def update_predictor(self, pc_lookup: int, pc_targ: int):

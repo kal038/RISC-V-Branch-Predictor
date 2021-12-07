@@ -30,7 +30,9 @@ class GlobalBranchHistory:
             self.history[i] = int(value_as_string[i])
 
 
-
+"""
+Units Tests for GlobalBranchHistory
+"""
 if __name__ == "__main__":
     my_gbh = GlobalBranchHistory()
     print(my_gbh.history)
