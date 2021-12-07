@@ -5,7 +5,7 @@ from bpa_pyriscv.mux import make_mux
 
 class BTB:
 
-	def __init__(self, predictor):
+	def __init__(self):
 		self.lookup_table = {}
  
 	def get_prediction(self, pc: int, is_taken: bool):
