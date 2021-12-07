@@ -61,7 +61,7 @@ def simulate_btb(width: int):
 				branch_event["is_taken"],
 				pc_sel
 			)
-		if is_taken_pred:
+		if is_taken_pred and branch_event["is_taken"]:
 			total_taken_pred += 1
 			if branch_event["actual_pc"] == pc_pred:
 				correct_preds += 1
@@ -88,8 +88,8 @@ if __name__ == "__main__":
 	print("num branches")
 	print_num_branches()
 	for width in range(1, 9):
-		print(str(width) + ":")
-		print("% accuracy for tp:")
-		simulate_tp(width)
-		print("% accuracy for BTB w/ tp:")
+		# print(str(width) + ":")
+		# print("% accuracy for tp:")
+		# simulate_tp(width)
+		# print("% accuracy for BTB w/ tp:")
 		simulate_btb(width)
