@@ -21,19 +21,17 @@ def print_std_pc(): # in bytes
 def print_num_branches():
 	print(len(BranchPredictorInfo.grouped_branch_seqs))
 
-
 def simulate_tp(width: int):
-	TABLE_WIDTH = 8
-	tp = TournamentPred(width = TABLE_WIDTH)
+	tp = TournamentPred(width = width)
 	correct_preds = 0
 	for branch_event in BranchPredictorInfo.grouped_branch_seqs:
 		pc_sel = int( \
-		(int(branch_event["instr"]["pc"], 16) / (2**TABLE_WIDTH)) \
-		% (2**TABLE_WIDTH)
+		(int(branch_event["instr"]["pc"], 16) / (2**width)) \
+		% (2**width)
 		)
-		branch_event_pred = \
+		is_taken_pred = \
 		tp.get_prediction(pc_sel)
-		if branch_event_pred == branch_event["is_taken"]:
+		if is_taken_pred == branch_event["is_taken"]:
 			correct_preds += 1
 		else:
 			tp.update_predictor(
@@ -45,21 +43,24 @@ def simulate_tp(width: int):
 	# print(f"TABLE_WIDTH: {width}; pct_correct: {pct_correct * 100}")	
 	print(round(pct_correct * 100, 2))
 
-def simulate_btb(width):
-	TABLE_WIDTH = 8
+def simulate_btb(width: int):
 	btb = BTB()
 	correct_preds = 0
 	total_taken_pred = 0
-	tp = TournamentPred(width = TABLE_WIDTH)
+	tp = TournamentPred(width = width)
 	for branch_event in BranchPredictorInfo.grouped_branch_seqs:
 		pc_lookup = int(branch_event["instr"]["pc"], 16)
-		pc_pred = btb.get_prediction(pc_lookup, branch_event["is_taken"])
+		pc_pred = btb.get_prediction(pc_lookup)
 		pc_sel = int( \
-		(int(branch_event["instr"]["pc"], 16) / (2**TABLE_WIDTH)) \
-		% (2**TABLE_WIDTH)
+		(int(branch_event["instr"]["pc"], 16) / (2**width)) \
+		% (2**width)
 		)
 		is_taken_pred = tp.get_prediction(pc_sel) 
-		# if branch_event["is_taken"]:
+		if is_taken_pred != branch_event["is_taken"]:
+			tp.update_predictor(
+				branch_event["is_taken"],
+				pc_sel
+			)
 		if is_taken_pred:
 			total_taken_pred += 1
 			if branch_event["actual_pc"] == pc_pred:
@@ -86,9 +87,9 @@ if __name__ == "__main__":
 	print_std_pc()
 	print("num branches")
 	print_num_branches()
-	for TABLE_WIDTH in range(1, 9):
-		print(str(TABLE_WIDTH) + ":")
+	for width in range(1, 9):
+		print(str(width) + ":")
 		print("% accuracy for tp:")
-		simulate_tp(width = TABLE_WIDTH)
-		print("% accuracy for BTB:")
-		simulate_btb(width = TABLE_WIDTH)
+		simulate_tp(width)
+		print("% accuracy for BTB w/ tp:")
+		simulate_btb(width)

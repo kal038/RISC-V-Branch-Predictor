@@ -8,8 +8,7 @@ class BTB:
 	def __init__(self):
 		self.lookup_table = {}
  
-	def get_prediction(self, pc: int, is_taken: bool):
-		if not is_taken: return None
+	def get_prediction(self, pc: int):
 		if pc not in self.lookup_table: return None
 		else: return self.lookup_table[pc] 
 
